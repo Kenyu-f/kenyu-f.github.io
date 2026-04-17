@@ -1,7 +1,7 @@
 ---
 layout: post
 title: ワードクラウドプログラムとその仕組みについて（数学編）
-date: 2026-04-16
+date: 2026-04-17
 description: 
 tags: python
 categories: Programming
