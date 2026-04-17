@@ -8,12 +8,12 @@
 
 サイト全体の挙動やメタデータは `_config.yml` で定義されます。
 
-| パラメータ | 説明 | 編集対象ファイル |
-| :--- | :--- | :--- |
-| `title`, `first_name`, `last_name` | 氏名とサイトタイトル。 | `_config.yml` |
-| `url`, `baseurl` | デプロイ先URL。スタイル崩れ時はここを最初に見る。 | `_config.yml` |
-| `scholar` | 論文リストでの著者ハイライト設定。 | `_config.yml` |
-| `enable_darkmode` | ダークモードの切り替えスイッチ。 | `_config.yml` |
+| パラメータ                         | 説明                                              | 編集対象ファイル |
+| :--------------------------------- | :------------------------------------------------ | :--------------- |
+| `title`, `first_name`, `last_name` | 氏名とサイトタイトル。                            | `_config.yml`    |
+| `url`, `baseurl`                   | デプロイ先URL。スタイル崩れ時はここを最初に見る。 | `_config.yml`    |
+| `scholar`                          | 論文リストでの著者ハイライト設定。                | `_config.yml`    |
+| `enable_darkmode`                  | ダークモードの切り替えスイッチ。                  | `_config.yml`    |
 
 ---
 
@@ -27,6 +27,7 @@
   - `nav_order: 1`: 表示順序。
 
 ### 主要ページ
+
 - `about.md`: ホームページ兼プロフィール。`subtitle` や `profile` オプションを編集。
 - `cv.md`: 履歴書ページ。実データは `_data/cv.yml` にあります。
 - `repositories.md`: GitHubリポジトリ表示設定。
@@ -38,16 +39,19 @@
 特定のフォーマットに従って `_data/` 内のファイルを編集することで、ページ内容を更新します。
 
 ### CV (履歴書)
+
 - **ファイル**: `_data/cv.yml`
 - **構造**: `sections` 以下に各カテゴリを配列形式で記述します。
   - `Languages`: 語学力。
   - `Interests`: 興味・関心分野。
 
 ### SNS・連絡先
+
 - **ファイル**: `_data/socials.yml`
 - **役割**: アイコンとリンクの対応。`enabled: true` で表示されます。
 
 ### リポジトリ
+
 - **ファイル**: `_data/repositories.yml`
 - **役割**: 表示したい GitHub ユーザー名や特定のリポジトリを指定します。
 
@@ -57,13 +61,13 @@
 
 時系列データや個別の記事を管理する仕組みです。
 
-| コレクション | ディレクトリ | ファイル形式 | 概要 |
-| :--- | :--- | :--- | :--- |
-| **Blog** | `_posts/` | `YYYY-MM-DD-title.md` | 定期的なブログ記事。 |
-| **Projects** | `_projects/` | `name.md` | 研究や開発プロジェクトの紹介。 |
-| **Teaching** | `_teachings/` | `course.md` | 講義資料や教育実績。 |
-| **News** | `_news/` | `announcement.md` | 短いお知らせ（Aboutページ等に表示）。 |
-| **Bookshelf** | `_books/` | `book.md` | 読書記録、レビュー。 |
+| コレクション  | ディレクトリ  | ファイル形式          | 概要                                  |
+| :------------ | :------------ | :-------------------- | :------------------------------------ |
+| **Blog**      | `_posts/`     | `YYYY-MM-DD-title.md` | 定期的なブログ記事。                  |
+| **Projects**  | `_projects/`  | `name.md`             | 研究や開発プロジェクトの紹介。        |
+| **Teaching**  | `_teachings/` | `course.md`           | 講義資料や教育実績。                  |
+| **News**      | `_news/`      | `announcement.md`     | 短いお知らせ（Aboutページ等に表示）。 |
+| **Bookshelf** | `_books/`     | `book.md`             | 読書記録、レビュー。                  |
 
 ---
 
