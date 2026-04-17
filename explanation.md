@@ -1,45 +1,94 @@
-# al-folio カスタマイズ説明書
+# al-folio 構成ドキュメント & カスタマイズガイド
 
-このドキュメントでは、`al-folio`テーマのどのファイルを編集すると、サイトのどの部分が更新されるかをまとめています。
+このドキュメントでは、Kenyu FUJIMOTO のポートフォリオサイト（al-folio テーマ）の設計構造、各ファイルの役割、および編集方法について詳説します。
 
-## 基本設定
+---
 
-- **サイト全体の設定**: `_config.yml`
-  - サイトタイトル、名前、URL、`baseurl`（GitHub Pages用）、SNSリンクの有効化、検索機能のON/OFFなどを設定します。
-- **ナビゲーションバー**: `_pages/` 内の各Markdownファイルの `nav: true` と `nav_order` で制御します。
+## 1. コア・コンフィギュレーション (Core Configuration)
 
-## プロフィール（About）
+サイト全体の挙動やメタデータは `_config.yml` で定義されます。
 
-- **自己紹介文**: `_pages/about.md`
-- **プロフィール写真**: `assets/img/prof_pic.jpg`（または `_pages/about.md` で指定したパス）
-- **SNSリンク**: `_data/socials.yml`
+| パラメータ | 説明 | 編集対象ファイル |
+| :--- | :--- | :--- |
+| `title`, `first_name`, `last_name` | 氏名とサイトタイトル。 | `_config.yml` |
+| `url`, `baseurl` | デプロイ先URL。スタイル崩れ時はここを最初に見る。 | `_config.yml` |
+| `scholar` | 論文リストでの著者ハイライト設定。 | `_config.yml` |
+| `enable_darkmode` | ダークモードの切り替えスイッチ。 | `_config.yml` |
 
-## ブログ・コンテンツ
+---
 
-- **ブログ記事**: `_posts/`
-  - `YYYY-MM-DD-title.md` という形式で作成します。
-- **Zibaldone**: `_zibaldone/`
-  - 今回新設したセクションです。ブログと同じ形式で記事を追加できます。
-- **ニュース（お知らせ）**: `_news/`
-  - トップページなどに表示される短いお知らせです。
-- **プロジェクト**: `_projects/`
-  - ポートフォリオや研究プロジェクトの紹介です。
+## 2. ページ構造 (Page Structure)
 
-## 学術・専門データ
+ナビゲーションバーに表示される各ページは `_pages/` ディレクトリに格納されています。
 
-- **論文・出版物**: `_bibliography/papers.bib`
-  - BibTeX形式で論文データを管理します。
-- **CV (履歴書)**: `_data/cv.yml` (RenderCV形式) または `assets/json/resume.json` (JSONResume形式)
-  - CVページの内容をデータ形式で管理します。
-- **共同著者**: `_data/coauthors.yml`
-- **学会・ジャーナル略称**: `_data/venues.yml`
+- **ディレクトリ**: `_pages/`
+- **制御方法**: フロントマター（ファイル先頭の `---` で囲まれた部分）
+  - `nav: true`: ナビゲーションバーに表示する。
+  - `nav_order: 1`: 表示順序。
 
-## デザイン・スタイル
+### 主要ページ
+- `about.md`: ホームページ兼プロフィール。`subtitle` や `profile` オプションを編集。
+- `cv.md`: 履歴書ページ。実データは `_data/cv.yml` にあります。
+- `repositories.md`: GitHubリポジトリ表示設定。
 
-- **テーマカラー**: `_sass/_themes.scss` および `_sass/_variables.scss`
-- **カスタムCSS**: `assets/css/` に追加するか、`_sass/` 内のファイルを編集します。
+---
 
-## トラブルシューティング
+## 3. データ駆動型コンテンツ (Data-driven Content)
 
-- **404エラー/スタイル崩れ**: `_config.yml` の `url` と `baseurl` が正しく設定されているか確認してください。
-- **表示が更新されない**: ブラウザのキャッシュをクリアするか、GitHub Actionsのビルドが完了するまで待機してください。
+特定のフォーマットに従って `_data/` 内のファイルを編集することで、ページ内容を更新します。
+
+### CV (履歴書)
+- **ファイル**: `_data/cv.yml`
+- **構造**: `sections` 以下に各カテゴリを配列形式で記述します。
+  - `Languages`: 語学力。
+  - `Interests`: 興味・関心分野。
+
+### SNS・連絡先
+- **ファイル**: `_data/socials.yml`
+- **役割**: アイコンとリンクの対応。`enabled: true` で表示されます。
+
+### リポジトリ
+- **ファイル**: `_data/repositories.yml`
+- **役割**: 表示したい GitHub ユーザー名や特定のリポジトリを指定します。
+
+---
+
+## 4. コレクション (Collections)
+
+時系列データや個別の記事を管理する仕組みです。
+
+| コレクション | ディレクトリ | ファイル形式 | 概要 |
+| :--- | :--- | :--- | :--- |
+| **Blog** | `_posts/` | `YYYY-MM-DD-title.md` | 定期的なブログ記事。 |
+| **Projects** | `_projects/` | `name.md` | 研究や開発プロジェクトの紹介。 |
+| **Teaching** | `_teachings/` | `course.md` | 講義資料や教育実績。 |
+| **News** | `_news/` | `announcement.md` | 短いお知らせ（Aboutページ等に表示）。 |
+| **Bookshelf** | `_books/` | `book.md` | 読書記録、レビュー。 |
+
+---
+
+## 5. 出版物管理 (Publications)
+
+学術的な出版物は BibTeX 形式で一括管理されます。
+
+- **データベース**: `_bibliography/papers.bib`
+- **表示制御**: 各エントリーに `selected={true}` を加えると、Aboutページの「Selected Publications」に表示されます（有効な場合）。
+
+---
+
+## 6. スタイルとテーマ (Styling)
+
+デザインの微調整は SCSS で行います。
+
+- **テーマカラー**: `_sass/_themes.scss`
+  - `:root` 内の `--global-theme-color` などを変更します。
+- **変数定義**: `_sass/_variables.scss`
+  - 色の定義やフォントサイズの設定。
+
+---
+
+## 7. メンテナンス・デプロイ
+
+- **画像の追加**: `assets/img/` に保存。
+- **PDFの追加**: `assets/pdf/` に保存。
+- **更新の反映**: GitHub へ `push` すると GitHub Actions が走り、自動的に `gh-pages` ブランチへビルド結果が反映されます。反映には 3〜5 分程度かかります。
