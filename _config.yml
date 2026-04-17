@@ -91,8 +91,8 @@ bing_site_verification: # out your bing-site-verification ID (Bing Webmaster)
 # Blog
 # -----------------------------------------------------------------------------
 
-blog_name: al-folio # blog_name will be displayed in your blog page
-blog_description: a simple whitespace theme for academics
+blog_name: Blog # blog_name will be displayed in your blog page
+blog_description: Sandbox of Thought
 permalink: /blog/:year/:title/
 lsi: false # produce an index for related posts
 
@@ -101,7 +101,7 @@ lsi: false # produce an index for related posts
 # -----------------------------------------------------------------------------
 
 zibaldone_name: zibaldone
-zibaldone_description: my personal zibaldone
+zibaldone_description: Why?/What if? zone
 zibaldone_permalink: /zibaldone/:year/:title/
 
 # Pagination
