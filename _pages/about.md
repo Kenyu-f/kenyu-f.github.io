@@ -2,7 +2,7 @@
 layout: about
 title: about
 permalink: /
-subtitle: プロフィール
+subtitle: #プロフィール
 
 profile:
   align: right
