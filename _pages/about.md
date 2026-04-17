@@ -6,7 +6,7 @@ subtitle: #プロフィール
 
 profile:
   align: right
-  image: prof_pic.jpg
+  image: liealgebra.svg
   image_circular: false # crops the image to make it circular
   more_info: >
 
