@@ -117,9 +117,9 @@ ninja.data = [{
             },},{id: "news-a-simple-inline-announcement-with-markdown-emoji-sparkles-smile",
           title: 'A simple inline announcement with Markdown emoji! :sparkles: :smile:',
           description: "",
-          section: "News",},{id: "zibaldone-welcome-to-zibaldone",
-          title: 'Welcome to Zibaldone',
-          description: "This is a sample post for zibaldone.",
+          section: "News",},{id: "zibaldone-ワードクラウドプログラムとその仕組みについて-数学編",
+          title: 'ワードクラウドプログラムとその仕組みについて（数学編）',
+          description: "",
           section: "Zibaldone",handler: () => {
               window.location.href = "/zibaldone/2026/welcome-to-zibaldone/";
             },},{
