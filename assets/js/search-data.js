@@ -121,7 +121,7 @@ ninja.data = [{
           title: 'ワードクラウドプログラムとその仕組みについて（数学編）',
           description: "",
           section: "Zibaldone",handler: () => {
-              window.location.href = "/zibaldone/2026/welcome-to-zibaldone/";
+              window.location.href = "/zibaldone/2026/wordclaudalgomath/";
             },},{
         id: 'social-cv',
         title: 'CV',
