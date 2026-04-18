@@ -119,7 +119,7 @@ ninja.data = [{
           description: "",
           section: "News",},{id: "zibaldone-ワードクラウドプログラムとその仕組みについて-数学編",
           title: 'ワードクラウドプログラムとその仕組みについて（数学編）',
-          description: "",
+          description: "数学のミニメモ",
           section: "Zibaldone",handler: () => {
               window.location.href = "/zibaldone/2026/welcome-to-zibaldone/";
             },},{
