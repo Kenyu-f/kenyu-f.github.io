@@ -1,7 +1,7 @@
 cv:
   name: Kenyu FUJIMOTO
-  label: Student
-  email:
+  label: High School Student (2026)
+  email: kenyu.fujimoto@icloud.com
   location: Japan
   image: ""
   summary:
@@ -9,9 +9,9 @@ cv:
   sections:
     Education: []
     Experience: []
-    Awards: []
+    Awards: [福岡市タイピングコンテストで、福岡市2位]
     Publications: []
-    Skills: []
+    Skills: [Programming Languages: Python, JavaScript, HTML/CSS, C, PHP, C++(basic), Rust(learning), TypeScript(learning)]
     Languages:
       - name: Japanese
         summary: "native"
@@ -23,7 +23,7 @@ cv:
       - name: Math
         summary: "Nth dimension, group theory, galois theory, ZFC"
       - name: Computer Science
-        summary: "Syntax of programming language, Ed-tech, p=np"
+        summary: "Syntax of programming language, Ed-tech, software development"
       - name: Linguistics
         summary: "Generative grammar"
     Certificates: []
