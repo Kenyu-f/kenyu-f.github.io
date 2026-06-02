@@ -1,0 +1,47 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="CV | Kenyu F.">
+  <article>
+    <h1>Curriculum Vitae</h1>
+    
+    <div class="cv-actions">
+      <a href="/cv.pdf" class="btn">[Download PDF]</a>
+    </div>
+
+    <section>
+      <h2>Education</h2>
+      <p>[Education placeholder]</p>
+    </section>
+
+    <section>
+      <h2>Experience</h2>
+      <p>[Experience placeholder]</p>
+    </section>
+
+    <section>
+      <h2>Honors & Awards</h2>
+      <p>[Awards placeholder]</p>
+    </section>
+  </article>
+</BaseLayout>
+
+<style>
+  .cv-actions {
+    margin-bottom: 2rem;
+    font-family: var(--font-sans);
+  }
+
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 0.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 2rem;
+  }
+</style>

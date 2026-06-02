@@ -1,0 +1,58 @@
+---
+import { FOOTER_LINKS } from '../consts';
+const today = new Date();
+---
+
+<footer>
+  <div class="footer-content">
+    <div class="copyright">
+      &copy; {today.getFullYear()} Kenyu F.
+    </div>
+    <div class="links">
+      {FOOTER_LINKS.map(link => (
+        <a href={link.href}>{link.label}</a>
+      ))}
+    </div>
+  </div>
+</footer>
+
+<style>
+  footer {
+    max-width: var(--max-width);
+    margin: 4rem auto 2rem;
+    padding: 2rem 1.5rem;
+    border-top: 1px solid var(--color-light-gray);
+  }
+
+  .footer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    color: var(--color-gray);
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .links a {
+    text-decoration: none;
+    color: inherit;
+    text-transform: lowercase;
+  }
+
+  .links a:hover {
+    color: var(--color-text);
+    text-decoration: underline;
+  }
+
+  @media (min-width: 600px) {
+    .footer-content {
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  }
+</style>

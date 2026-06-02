@@ -1,0 +1,168 @@
+---
+import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    
+    <!-- KaTeX CSS -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFas9aLYE34"
+      crossorigin="anonymous"
+    />
+
+    <style is:global>
+      :root {
+        --font-serif: "Georgia", "Times New Roman", Times, serif;
+        --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        --color-text: #1a1a1a;
+        --color-bg: #ffffff;
+        --color-gray: #666666;
+        --color-light-gray: #eeeeee;
+        --max-width: 680px;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: var(--font-serif);
+        line-height: 1.6;
+        color: var(--color-text);
+        background-color: var(--color-bg);
+        margin: 0;
+        padding: 0;
+        word-wrap: break-word;
+        text-rendering: optimizeLegibility;
+        -webkit-font-smoothing: antialiased;
+      }
+
+      main {
+        max-width: var(--max-width);
+        margin: 0 auto;
+        padding: 2rem 1.5rem;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: var(--font-serif);
+        font-weight: normal;
+        margin-top: 2rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      a {
+        color: inherit;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        text-decoration-thickness: 1px;
+        text-decoration-color: var(--color-gray);
+      }
+
+      a:hover {
+        text-decoration-color: var(--color-text);
+      }
+
+      p {
+        margin-bottom: 1.5rem;
+      }
+
+      ul, ol {
+        margin-bottom: 1.5rem;
+        padding-left: 1.5rem;
+      }
+
+      li {
+        margin-bottom: 0.5rem;
+      }
+
+      blockquote {
+        margin: 2rem 0;
+        padding-left: 1.5rem;
+        border-left: 1px solid var(--color-light-gray);
+        font-style: italic;
+        color: var(--color-gray);
+      }
+
+      code {
+        font-family: monospace;
+        background-color: #f5f5f5;
+        padding: 0.2rem 0.4rem;
+        border-radius: 3px;
+        font-size: 0.9em;
+      }
+
+      pre {
+        padding: 1rem;
+        overflow-x: auto;
+        background-color: #f5f5f5;
+        border-radius: 3px;
+        margin-bottom: 1.5rem;
+      }
+
+      pre code {
+        background-color: transparent;
+        padding: 0;
+      }
+
+      img {
+        max-width: 100%;
+        height: auto;
+      }
+
+      hr {
+        border: 0;
+        border-top: 1px solid var(--color-light-gray);
+        margin: 3rem 0;
+      }
+
+      small {
+        font-size: 0.8em;
+        color: var(--color-gray);
+      }
+
+      .tag {
+        font-family: var(--font-sans);
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--color-gray);
+        text-decoration: none;
+        border: 1px solid var(--color-light-gray);
+        padding: 2px 6px;
+        border-radius: 3px;
+        margin-right: 0.5rem;
+      }
+
+      .tag:hover {
+        background-color: var(--color-light-gray);
+      }
+    </style>
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

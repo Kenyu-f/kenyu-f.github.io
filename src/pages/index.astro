@@ -1,17 +1,19 @@
 ---
-
+import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
-</html>
+<BaseLayout title="About | Kenyu F.">
+  <section>
+    <h1>About</h1>
+    <p>
+      I am an early-stage researcher focused on the intersections of mathematics, linguistics, and computer science. 
+      My work explores how formal structures in language can be modeled and understood through the lens of cognitive science and computational theory.
+    </p>
+    <p>
+      Currently, I am investigating open questions in multilingualism and cognition, seeking to bridge the gap between abstract symbolic logic and empirical linguistic data.
+    </p>
+    <p>
+      This site serves as my digital garden—a quiet space for my research notes, formal publications, and ongoing projects.
+    </p>
+  </section>
+</BaseLayout>

@@ -1,0 +1,81 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const teaching = (await getCollection('teaching')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<BaseLayout title="Teaching | Kenyu F.">
+  <h1>Teaching</h1>
+  
+  <div class="teaching-list">
+    {teaching.length > 0 ? (
+      teaching.map(item => (
+        <article class="teaching-item">
+          <div class="metadata">
+            <time datetime={item.data.date.toISOString()}>
+              {item.data.date.toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}
+            </time>
+            {item.data.venue && <span class="venue">{item.data.venue}</span>}
+          </div>
+          <h2 class="teaching-title">{item.data.title}</h2>
+          {item.data.role && <p class="role">{item.data.role}</p>}
+          <p class="description">{item.data.description}</p>
+          <div class="materials">
+            {item.data.materials.map(mat => (
+              <a href={mat.url}>[{mat.label}]</a>
+            ))}
+          </div>
+        </article>
+      ))
+    ) : (
+      <p><em>No teaching records yet.</em></p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .teaching-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .teaching-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .metadata {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-gray);
+  }
+
+  .teaching-title {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .role {
+    font-style: italic;
+    margin: 0;
+    font-size: 0.95rem;
+  }
+
+  .description {
+    margin: 0.5rem 0;
+  }
+
+  .materials {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.85rem;
+  }
+</style>

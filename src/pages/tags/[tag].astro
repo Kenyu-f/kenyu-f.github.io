@@ -1,0 +1,90 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog');
+  const uniqueTags = [...new Set(posts.map((post) => post.data.tags).flat())];
+
+  return uniqueTags.map((tag) => {
+    const filteredPosts = posts
+      .filter((post) => post.data.tags.includes(tag))
+      .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
+    return {
+      params: { tag },
+      props: { posts: filteredPosts },
+    };
+  });
+}
+
+const { tag } = Astro.params;
+const { posts } = Astro.props;
+---
+
+<BaseLayout title={`Tag: ${tag} | Kenyu F.`}>
+  <h1>Tag: {tag}</h1>
+  
+  <div class="post-list">
+    {posts.map(post => (
+      <article class="post-item">
+        <time datetime={post.data.date.toISOString()}>
+          {post.data.date.toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'short',
+            day: 'numeric'
+          })}
+        </time>
+        <h2 class="post-title">
+          <a href={`/blog/${post.id}`}>{post.data.title}</a>
+        </h2>
+      </article>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .post-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+
+  .post-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+  }
+
+  time {
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-gray);
+  }
+
+  .post-title {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+
+  .post-title a {
+    text-decoration: none;
+    color: var(--color-text);
+  }
+
+  .post-title a:hover {
+    text-decoration: underline;
+  }
+
+  @media (min-width: 600px) {
+    .post-item {
+      flex-direction: row;
+      gap: 2rem;
+      align-items: baseline;
+    }
+    time {
+      width: 100px;
+      flex-shrink: 0;
+    }
+  }
+</style>

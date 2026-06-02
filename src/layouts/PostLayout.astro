@@ -1,0 +1,61 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+const { title, date, description, tags } = Astro.props;
+---
+
+<BaseLayout title={title} description={description}>
+  <article>
+    <header>
+      <h1>{title}</h1>
+      <div class="metadata">
+        <time datetime={date.toISOString()}>
+          {date.toLocaleDateString('en-us', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+          })}
+        </time>
+        {tags && (
+          <div class="tags">
+            {tags.map(tag => (
+              <a href={`/tags/${tag}`} class="tag">{tag}</a>
+            ))}
+          </div>
+        )}
+      </div>
+    </header>
+    <hr />
+    <div class="content">
+      <slot />
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  header {
+    margin-bottom: 2rem;
+  }
+  
+  h1 {
+    margin-bottom: 0.5rem;
+  }
+
+  .metadata {
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    color: var(--color-gray);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .content {
+    line-height: 1.8;
+  }
+</style>

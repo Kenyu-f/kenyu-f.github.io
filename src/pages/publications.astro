@@ -1,0 +1,46 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import PublicationItem from '../components/PublicationItem.astro';
+
+const pubs = (await getCollection('publications')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const preprints = pubs.filter(p => p.data.status === 'preprint' || p.data.status === 'working-paper');
+const published = pubs.filter(p => p.data.status === 'published' || p.data.status === 'in-review');
+---
+
+<BaseLayout title="Publications | Kenyu F.">
+  <h1>Publications</h1>
+  
+  {preprints.length > 0 && (
+    <section>
+      <h2>Preprints & Working Papers</h2>
+      {preprints.map(pub => <PublicationItem pub={pub} />)}
+    </section>
+  )}
+
+  <section>
+    <h2>Peer-Reviewed</h2>
+    {published.length > 0 ? (
+      published.map(pub => <PublicationItem pub={pub} />)
+    ) : (
+      <p><em>Coming soon.</em></p>
+    )}
+  </section>
+</BaseLayout>
+
+<style>
+  h2 {
+    font-family: var(--font-sans);
+    font-size: 1rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-light-gray);
+    padding-bottom: 0.5rem;
+    margin-bottom: 2rem;
+    margin-top: 3rem;
+  }
+</style>

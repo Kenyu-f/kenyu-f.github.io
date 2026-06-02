@@ -1,0 +1,83 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
+);
+---
+
+<BaseLayout title="Projects | Kenyu F.">
+  <h1>Projects</h1>
+  
+  <div class="project-list">
+    {projects.length > 0 ? (
+      projects.map(project => (
+        <article class="project-item">
+          <div class="metadata">
+            <span class="status">{project.data.status}</span>
+            <span class="date">
+              {project.data.startDate.getFullYear()}
+              {project.data.endDate ? ` — ${project.data.endDate.getFullYear()}` : ' — Present'}
+            </span>
+          </div>
+          <h2 class="project-title">{project.data.title}</h2>
+          <p class="description">{project.data.description}</p>
+          <div class="links">
+            {project.data.repository && <a href={project.data.repository}>Repository</a>}
+            {project.data.demo && <a href={project.data.demo}>Demo</a>}
+          </div>
+          <div class="tags">
+            {project.data.tags.map(tag => <span class="tag">{tag}</span>)}
+          </div>
+        </article>
+      ))
+    ) : (
+      <p><em>No projects listed yet.</em></p>
+    )}
+  </div>
+</BaseLayout>
+
+<style>
+  .project-list {
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+  }
+
+  .project-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .metadata {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.8rem;
+    color: var(--color-gray);
+    text-transform: uppercase;
+  }
+
+  .project-title {
+    font-size: 1.2rem;
+    margin: 0;
+  }
+
+  .description {
+    margin: 0;
+    font-size: 1rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 1rem;
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+  }
+
+  .tags {
+    margin-top: 0.5rem;
+  }
+</style>
