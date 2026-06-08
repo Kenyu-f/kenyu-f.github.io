@@ -14,19 +14,19 @@ const teaching = (await getCollection('teaching')).sort(
     {teaching.length > 0 ? (
       teaching.map(item => (
         <article class="teaching-item">
-          <div class="metadata">
-            <time datetime={item.data.date.toISOString()}>
-              {item.data.date.toLocaleDateString('en-us', { year: 'numeric', month: 'long' })}
-            </time>
-            {item.data.venue && <span class="venue">{item.data.venue}</span>}
+          <div class="date quiet">
+            {item.data.date.getFullYear()}
           </div>
-          <h2 class="teaching-title">{item.data.title}</h2>
-          {item.data.role && <p class="role">{item.data.role}</p>}
-          <p class="description">{item.data.description}</p>
-          <div class="materials">
-            {item.data.materials.map(mat => (
-              <a href={mat.url}>[{mat.label}]</a>
-            ))}
+          <div class="details">
+            <h2 class="teaching-title">{item.data.title}</h2>
+            {item.data.role && <p class="role"><em>{item.data.role}</em></p>}
+            {item.data.venue && <p class="venue quiet">{item.data.venue}</p>}
+            <p class="description">{item.data.description}</p>
+            <div class="materials">
+              {item.data.materials.map(mat => (
+                <a href={mat.url}>{mat.label}</a>
+              ))}
+            </div>
           </div>
         </article>
       ))
@@ -40,42 +40,65 @@ const teaching = (await getCollection('teaching')).sort(
   .teaching-list {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 4rem;
+    margin-top: 3rem;
   }
 
   .teaching-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
   }
 
-  .metadata {
-    display: flex;
-    gap: 1rem;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    color: var(--color-gray);
+  .date {
+    font-size: 0.95rem;
+    padding-top: 0.2rem;
   }
 
   .teaching-title {
     font-size: 1.2rem;
-    margin: 0;
+    font-weight: 700;
+    margin: 0 0 0.25rem 0;
   }
 
   .role {
-    font-style: italic;
-    margin: 0;
     font-size: 0.95rem;
+    margin: 0 0 0.25rem 0;
+  }
+
+  .venue {
+    font-size: 0.9rem;
+    margin: 0 0 1rem 0;
   }
 
   .description {
-    margin: 0.5rem 0;
+    margin: 0 0 1rem 0;
+    max-width: 560px;
   }
 
   .materials {
     display: flex;
-    gap: 1rem;
-    font-family: var(--font-sans);
+    gap: 1.5rem;
     font-size: 0.85rem;
+  }
+
+  .materials a {
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .materials a:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+  }
+
+  @media (max-width: 600px) {
+    .teaching-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
   }
 </style>

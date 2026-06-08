@@ -2,61 +2,96 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="About | Kenyu F.">
-  <section>
-    <h1>About</h1>
+<BaseLayout title="Kenyu F.">
+  <div class="home-container">
+    <section class="intro">
+      <h1>Kenyu F.</h1>
+      <p>
+        I am a student based in Japan, deeply engaged in mathematics, 
+        computer science, and linguistics. My work explores the formal 
+        foundations of axiomatic systems and the relationship between 
+        computation and education.
+      </p>
+    </section>
 
-    <p>
-      I am a student deeply engaged in mathematics, computer science,
-      and linguistics in Japan, with an interest in
-      <a href="https://en.wikipedia.org/wiki/Effective_altruism" target="_blank">
-        effective altruism
-      </a>
-      and
-      <a href="https://en.wikipedia.org/wiki/Neoliberalism" target="_blank">
-        neoliberalism
-      </a>.
-    </p>
+    <div class="profile-image-wrapper">
+      <!-- 
+        To add your photo, place it in the public/ folder 
+        and replace the div below with:
+        <img src="/your-photo.jpg" alt="Kenyu F." class="profile-photo" />
+      -->
+      <div class="placeholder-image"></div>
+    </div>
 
-    <p>
-      At present, I am particularly interested in the following
-      questions and areas of study.
-    </p>
-
-    <h3>Mathematics</h3>
-
-    <p>
-      My interests lie primarily in proof theory and algebra.
-      In proof theory, I am studying axiomatic systems,
-      model theory, and type theory. In algebra,
-      I am especially interested in Cayley–Dickson algebras
-      and hyperoperations, with a broader interest in
-      the expansion of number systems and algebraic worlds.
-    </p>
-
-    <h3>Computer Science</h3>
-
-    <p>
-      I am interested in the relationship between computation
-      and education. Currently, I am engaged in educational
-      research at Kitakyushu City University, particularly
-      concerning how computational tools and systems can support
-      learning and knowledge transmission.
-    </p>
-
-    <h3>Linguistics</h3>
-
-    <p>
-      I am learning 20+ languages, including English, Spanish,
-      Chinese, Korean, Arabic, Hindi, Persian, Russian,
-      and German. My interests extend beyond language acquisition
-      itself to multilingual cognition, linguistic structure,
-      and cross-linguistic comparison.
-    </p>
-
-    <p>
-      This site serves as my digital garden — a quiet space
-      for research notes, formal publications, and ongoing projects.
-    </p>
-  </section>
+    <section class="interests">
+      <h2 class="section-title">Research Interests</h2>
+      <ul>
+        <li>Proof theory and algebraic structures</li>
+        <li>Computational tools in education</li>
+        <li>Multilingual cognition and structure</li>
+      </ul>
+    </section>
+  </div>
 </BaseLayout>
+
+<style>
+  .home-container {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+    margin-top: 2rem;
+  }
+
+  .intro h1 {
+    margin-top: 0;
+    font-size: 2.2rem;
+  }
+
+  .intro p {
+    font-size: 1.15rem;
+    max-width: 540px;
+    line-height: 1.8;
+  }
+
+  .profile-image-wrapper {
+    margin: 1rem 0;
+  }
+
+  .placeholder-image {
+    width: 240px;
+    height: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #f0f0f0;
+  }
+
+  .profile-photo {
+    width: 240px;
+    height: auto;
+    filter: grayscale(100%);
+    opacity: 0.9;
+  }
+
+  .section-title {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+    color: var(--color-gray);
+    margin-bottom: 2rem;
+  }
+
+  ul {
+    list-style-type: none;
+    padding-left: 0;
+  }
+
+  li {
+    margin-bottom: 0.75rem;
+    font-size: 1.05rem;
+  }
+
+  li::before {
+    content: "—";
+    margin-right: 1rem;
+    color: var(--color-border);
+  }
+</style>

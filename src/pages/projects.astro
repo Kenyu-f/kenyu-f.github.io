@@ -14,21 +14,16 @@ const projects = (await getCollection('projects')).sort(
     {projects.length > 0 ? (
       projects.map(project => (
         <article class="project-item">
-          <div class="metadata">
-            <span class="status">{project.data.status}</span>
-            <span class="date">
-              {project.data.startDate.getFullYear()}
-              {project.data.endDate ? ` — ${project.data.endDate.getFullYear()}` : ' — Present'}
-            </span>
+          <div class="year quiet">
+            {project.data.startDate.getFullYear()}
           </div>
-          <h2 class="project-title">{project.data.title}</h2>
-          <p class="description">{project.data.description}</p>
-          <div class="links">
-            {project.data.repository && <a href={project.data.repository}>Repository</a>}
-            {project.data.demo && <a href={project.data.demo}>Demo</a>}
-          </div>
-          <div class="tags">
-            {project.data.tags.map(tag => <span class="tag">{tag}</span>)}
+          <div class="details">
+            <h2 class="project-title">{project.data.title}</h2>
+            <p class="description">{project.data.description}</p>
+            <div class="links">
+              {project.data.repository && <a href={project.data.repository}>Repository</a>}
+              {project.data.demo && <a href={project.data.demo}>Demo</a>}
+            </div>
           </div>
         </article>
       ))
@@ -42,42 +37,56 @@ const projects = (await getCollection('projects')).sort(
   .project-list {
     display: flex;
     flex-direction: column;
-    gap: 3rem;
+    gap: 4rem;
+    margin-top: 3rem;
   }
 
   .project-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
   }
 
-  .metadata {
-    display: flex;
-    gap: 1rem;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    color: var(--color-gray);
-    text-transform: uppercase;
+  .year {
+    font-size: 0.95rem;
+    padding-top: 0.2rem;
   }
 
   .project-title {
     font-size: 1.2rem;
-    margin: 0;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
   }
 
   .description {
-    margin: 0;
+    margin: 0 0 1rem 0;
     font-size: 1rem;
+    max-width: 560px;
   }
 
   .links {
     display: flex;
-    gap: 1rem;
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
+    gap: 1.5rem;
+    font-size: 0.85rem;
   }
 
-  .tags {
-    margin-top: 0.5rem;
+  .links a {
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .links a:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+  }
+
+  @media (max-width: 600px) {
+    .project-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
   }
 </style>

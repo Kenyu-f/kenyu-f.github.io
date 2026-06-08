@@ -15,23 +15,18 @@ const posts = (await getCollection('blog'))
     {posts.length > 0 ? (
       posts.map(post => (
         <article class="post-item">
-          <time datetime={post.data.date.toISOString()}>
+          <div class="date quiet">
             {post.data.date.toLocaleDateString('en-us', {
               month: 'short',
               day: 'numeric',
               year: 'numeric'
             })}
-          </time>
-          <div class="post-content">
+          </div>
+          <div class="details">
             <h2 class="post-title">
               <a href={`/blog/${post.id}`}>{post.data.title}</a>
             </h2>
             {post.data.summary && <p class="summary">{post.data.summary}</p>}
-            <div class="tags">
-              {post.data.tags.map(tag => (
-                <a href={`/tags/${tag}`} class="tag">{tag}</a>
-              ))}
-            </div>
           </div>
         </article>
       ))
@@ -44,7 +39,8 @@ const posts = (await getCollection('blog'))
 <style>
   .intro {
     color: var(--color-gray);
-    margin-bottom: 3rem;
+    margin-bottom: 4rem;
+    font-size: 1.1rem;
   }
 
   .post-list {
@@ -54,21 +50,19 @@ const posts = (await getCollection('blog'))
   }
 
   .post-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.5rem;
   }
 
-  time {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    color: var(--color-gray);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
+  .date {
+    font-size: 0.9rem;
+    padding-top: 0.25rem;
   }
 
   .post-title {
-    font-size: 1.25rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin: 0 0 0.5rem 0;
   }
 
@@ -79,30 +73,21 @@ const posts = (await getCollection('blog'))
 
   .post-title a:hover {
     text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
   .summary {
     font-size: 0.95rem;
     color: var(--color-gray);
-    margin: 0 0 0.75rem 0;
+    margin: 0;
+    line-height: 1.6;
+    max-width: 520px;
   }
 
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
-  }
-
-  @media (min-width: 600px) {
+  @media (max-width: 600px) {
     .post-item {
-      flex-direction: row;
-      gap: 2rem;
-      align-items: baseline;
-    }
-
-    time {
-      flex-shrink: 0;
-      width: 100px;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 </style>

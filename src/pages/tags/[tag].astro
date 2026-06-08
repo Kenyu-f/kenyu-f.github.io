@@ -4,9 +4,9 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('blog');
-  const uniqueTags = [...new Set(posts.map((post) => post.data.tags).flat())];
+  const tags = [...new Set(posts.flatMap((post) => post.data.tags))];
 
-  return uniqueTags.map((tag) => {
+  return tags.map((tag) => {
     const filteredPosts = posts
       .filter((post) => post.data.tags.includes(tag))
       .sort((a, b) => b.data.date.valueOf() - a.data.date.valueOf());
@@ -23,20 +23,22 @@ const { posts } = Astro.props;
 
 <BaseLayout title={`Tag: ${tag} | Kenyu F.`}>
   <h1>Tag: {tag}</h1>
-  
+
   <div class="post-list">
     {posts.map(post => (
       <article class="post-item">
-        <time datetime={post.data.date.toISOString()}>
+        <div class="date quiet">
           {post.data.date.toLocaleDateString('en-us', {
             year: 'numeric',
             month: 'short',
             day: 'numeric'
           })}
-        </time>
-        <h2 class="post-title">
-          <a href={`/blog/${post.id}`}>{post.data.title}</a>
-        </h2>
+        </div>
+        <div class="details">
+          <h2 class="post-title">
+            <a href={`/blog/${post.id}`}>{post.data.title}</a>
+          </h2>
+        </div>
       </article>
     ))}
   </div>
@@ -44,26 +46,26 @@ const { posts } = Astro.props;
 
 <style>
   .post-list {
-    margin-top: 2rem;
+    margin-top: 3rem;
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 3rem;
   }
 
   .post-item {
-    display: flex;
-    flex-direction: column;
-    gap: 0.25rem;
+    display: grid;
+    grid-template-columns: 8rem 1fr;
+    gap: 1.5rem;
   }
 
-  time {
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-    color: var(--color-gray);
+  .date {
+    font-size: 0.9rem;
+    padding-top: 0.25rem;
   }
 
   .post-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
+    font-weight: 700;
     margin: 0;
   }
 
@@ -74,17 +76,13 @@ const { posts } = Astro.props;
 
   .post-title a:hover {
     text-decoration: underline;
+    text-underline-offset: 4px;
   }
 
-  @media (min-width: 600px) {
+  @media (max-width: 600px) {
     .post-item {
-      flex-direction: row;
-      gap: 2rem;
-      align-items: baseline;
-    }
-    time {
-      width: 100px;
-      flex-shrink: 0;
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
     }
   }
 </style>

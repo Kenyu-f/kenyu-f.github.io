@@ -1,93 +1,85 @@
 ---
 const { pub } = Astro.props;
-const { title, authors, year, venue, status, pdf, doi, tags } = pub.data;
+const { title, authors, year, venue, status, pdf, doi } = pub.data;
 ---
 
 <div class="pub-item">
-  <div class="metadata">
-    <span class="status-tag" data-status={status}>{status}</span>
-    <span class="year">{year}</span>
-  </div>
-  <h3 class="title">{title}</h3>
-  <div class="authors">
-    {authors.map((author, index) => (
-      <span>
-        {author}{index < authors.length - 1 ? ', ' : ''}
-      </span>
-    ))}
-  </div>
-  <div class="venue">
-    {venue && <em>{venue}</em>}
-  </div>
-  <div class="links">
-    {pdf && <a href={pdf}>[pdf]</a>}
-    {doi && <a href={`https://doi.org/${doi}`}>[doi]</a>}
+  <div class="year quiet">{year}</div>
+  <div class="details">
+    <div class="title">{title}</div>
+    <div class="authors">
+      {authors.map((author, index) => (
+        <span>
+          {author}{index < authors.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </div>
+    <div class="venue-row">
+      {venue && <span class="venue"><em>{venue}</em></span>}
+      {status !== 'published' && <span class="status quiet">({status})</span>}
+    </div>
+    <div class="links">
+      {pdf && <a href={pdf}>PDF</a>}
+      {doi && <a href={`https://doi.org/${doi}`}>DOI</a>}
+    </div>
   </div>
 </div>
 
 <style>
   .pub-item {
-    margin-bottom: 2.5rem;
-  }
-
-  .metadata {
-    display: flex;
-    align-items: center;
-    gap: 0.75rem;
-    margin-bottom: 0.5rem;
-    font-family: var(--font-sans);
-    font-size: 0.8rem;
-  }
-
-  .status-tag {
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-gray);
-    border: 1px solid var(--color-light-gray);
-    padding: 1px 4px;
-    border-radius: 2px;
-  }
-
-  .status-tag[data-status="published"] {
-    color: #2e7d32;
-    border-color: #a5d6a7;
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
   }
 
   .year {
-    color: var(--color-gray);
+    font-size: 0.95rem;
+    padding-top: 0.15rem;
   }
 
   .title {
+    font-weight: 700;
     font-size: 1.1rem;
-    margin: 0 0 0.25rem 0;
-    line-height: 1.3;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
   }
 
   .authors {
-    font-size: 0.95rem;
+    font-size: 1rem;
     margin-bottom: 0.25rem;
   }
 
-  .venue {
+  .venue-row {
     font-size: 0.95rem;
-    color: var(--color-gray);
     margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
   }
 
   .links {
-    font-family: var(--font-sans);
-    font-size: 0.85rem;
     display: flex;
-    gap: 0.75rem;
+    gap: 1.25rem;
+    font-size: 0.85rem;
   }
 
   .links a {
     text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     color: var(--color-gray);
+    border-bottom: 1px solid var(--color-border);
   }
 
   .links a:hover {
     color: var(--color-text);
-    text-decoration: underline;
+    border-bottom-color: var(--color-text);
+  }
+
+  @media (max-width: 600px) {
+    .pub-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
   }
 </style>

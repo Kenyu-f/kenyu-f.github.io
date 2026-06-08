@@ -1,13 +1,13 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-const { title, date, description, tags } = Astro.props;
+const { title, date, description } = Astro.props;
 ---
 
 <BaseLayout title={title} description={description}>
   <article>
     <header>
       <h1>{title}</h1>
-      <div class="metadata">
+      <div class="metadata quiet">
         <time datetime={date.toISOString()}>
           {date.toLocaleDateString('en-us', {
             year: 'numeric',
@@ -15,47 +15,45 @@ const { title, date, description, tags } = Astro.props;
             day: 'numeric',
           })}
         </time>
-        {tags && (
-          <div class="tags">
-            {tags.map(tag => (
-              <a href={`/tags/${tag}`} class="tag">{tag}</a>
-            ))}
-          </div>
-        )}
       </div>
     </header>
-    <hr />
+    
     <div class="content">
       <slot />
     </div>
+
+    <footer>
+      <hr />
+      <p><a href="/blog">← Back to blog</a></p>
+    </footer>
   </article>
 </BaseLayout>
 
 <style>
   header {
-    margin-bottom: 2rem;
+    margin-bottom: 4rem;
   }
   
   h1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    line-height: 1.2;
   }
 
   .metadata {
-    font-family: var(--font-sans);
-    font-size: 0.9rem;
-    color: var(--color-gray);
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-  }
-
-  .tags {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem;
+    font-size: 0.95rem;
   }
 
   .content {
-    line-height: 1.8;
+    margin-bottom: 6rem;
+  }
+
+  footer {
+    margin-top: 4rem;
+    font-size: 0.95rem;
+  }
+
+  footer hr {
+    margin: 2rem 0;
   }
 </style>
