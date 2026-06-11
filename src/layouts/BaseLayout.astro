@@ -21,22 +21,10 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     
-    <!-- Typography: Source Serif 4 and Noto Serif JP -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
-    
-    <!-- KaTeX CSS -->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
-      integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI+WdtXRGWt2kTvGFas9aLYE34"
-      crossorigin="anonymous"
-    />
-
+    <!-- Typography: Hiragino Sans -->
     <style is:global>
       :root {
-        --font-serif: "Source Serif 4", "Noto Serif JP", Georgia, "Times New Roman", serif;
+        --font-sans: "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         --color-text: #000000;
         --color-bg: #ffffff;
         --color-gray: #555555;
@@ -54,7 +42,8 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
       }
 
       body {
-        font-family: var(--font-serif);
+        font-family: var(--font-sans);
+        font-weight: 300;
         line-height: 1.75;
         color: var(--color-text);
         background-color: var(--color-bg);
@@ -73,7 +62,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
       }
 
       h1, h2, h3, h4, h5, h6 {
-        font-weight: 700;
+        font-weight: 300;
         margin-top: 3rem;
         margin-bottom: 1.5rem;
         line-height: 1.3;
