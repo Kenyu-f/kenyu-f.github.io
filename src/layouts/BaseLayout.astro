@@ -25,11 +25,14 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org//face/cmu-sans-serif" type="text/css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/computer-modern@0.1.3/cmu-sans-serif.min.css">
 
     <style is:global>
       :root {
         --font-serif: "Cormorant Garamond", serif;
         --font-sans: "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --font-cmu-sans: "CMUSansSerifBold", "CMU Sans Serif", "Computer Modern Sans", sans-serif;
         --color-text: #000000;
         --color-bg: #ffffff;
         --color-gray: #555555;
