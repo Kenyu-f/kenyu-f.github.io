@@ -9,7 +9,7 @@ import { SITE_TITLE, NAV_LINKS } from '../consts';
     </div>
     <div class="links">
       {NAV_LINKS.map(link => (
-        <a href={link.href} class={link.label === 'about' ? 'about-link' : ''}>{link.label}</a>
+        <a href={link.href}>{link.label}</a>
       ))}
     </div>
   </nav>
@@ -46,10 +46,6 @@ import { SITE_TITLE, NAV_LINKS } from '../consts';
     color: var(--color-gray);
     font-size: 0.95rem;
     font-weight: 300;
-  }
-
-  .links a.about-link {
-    font-weight: 500;
   }
 
   .links a:hover {
