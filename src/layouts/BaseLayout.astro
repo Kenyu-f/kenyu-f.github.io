@@ -21,9 +21,14 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
     <title>{title}</title>
     <meta name="description" content={description} />
     
-    <!-- Typography: Hiragino Sans -->
+    <!-- Typography: Cormorant Garamond for titles, Hiragino Sans for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@700&display=swap" rel="stylesheet">
+
     <style is:global>
       :root {
+        --font-serif: "Cormorant Garamond", serif;
         --font-sans: "Hiragino Sans", "ヒラギノ角ゴ Pro W3", "Hiragino Kaku Gothic Pro", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
         --color-text: #000000;
         --color-bg: #ffffff;
@@ -69,7 +74,27 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
         color: var(--color-text);
       }
 
-      h1 { font-size: 1.8rem; }
+      h1 {
+        font-family: var(--font-serif);
+        font-weight: 700;
+        font-size: 2.4rem;
+        letter-spacing: -0.02em;
+        margin-top: 0;
+        margin-bottom: 3rem;
+        position: relative;
+        display: inline-block;
+      }
+
+      h1::after {
+        content: "";
+        position: absolute;
+        bottom: -8px;
+        left: 0;
+        width: 30px;
+        height: 1px;
+        background-color: var(--color-text);
+      }
+
       h2 { font-size: 1.4rem; }
       h3 { font-size: 1.2rem; }
 
