@@ -1,5 +1,5 @@
-export const SITE_TITLE = 'Kenyu F';
-export const SITE_DESCRIPTION = 'Academic personal website of Kenyu F';
+export const SITE_TITLE = 'Kenyu FUJIMOTO';
+export const SITE_DESCRIPTION = 'Academic personal website of Kenyu FUJIMOTO';
 export const NAV_LINKS = [
   { href: '/about', label: 'about' },
   { href: '/research', label: 'research' },

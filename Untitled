@@ -1,0 +1,85 @@
+---
+const { pub } = Astro.props;
+const { title, authors, year, venue, status, pdf, doi } = pub.data;
+---
+
+<div class="pub-item">
+  <div class="year quiet">{year}</div>
+  <div class="details">
+    <div class="title">{title}</div>
+    <div class="authors">
+      {authors.map((author, index) => (
+        <span>
+          {author}{index < authors.length - 1 ? ', ' : ''}
+        </span>
+      ))}
+    </div>
+    <div class="venue-row">
+      {venue && <span class="venue"><em>{venue}</em></span>}
+      {status !== 'published' && <span class="status quiet">({status})</span>}
+    </div>
+    <div class="links">
+      {pdf && <a href={pdf}>PDF</a>}
+      {doi && <a href={`https://doi.org/${doi}`}>DOI</a>}
+    </div>
+  </div>
+</div>
+
+<style>
+  .pub-item {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+
+  .year {
+    font-size: 0.95rem;
+    padding-top: 0.15rem;
+  }
+
+  .title {
+    font-weight: 300;
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+    line-height: 1.4;
+  }
+
+  .authors {
+    font-size: 1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .venue-row {
+    font-size: 0.95rem;
+    margin-bottom: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .links {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.85rem;
+  }
+
+  .links a {
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-gray);
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .links a:hover {
+    color: var(--color-text);
+    border-bottom-color: var(--color-text);
+  }
+
+  @media (max-width: 600px) {
+    .pub-item {
+      grid-template-columns: 1fr;
+      gap: 0.5rem;
+    }
+  }
+</style>
