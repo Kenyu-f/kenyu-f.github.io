@@ -1,5 +1,5 @@
 ---
-title: Educational/technial research at University of Kitakyushu
+title: Educational/technical research at University of Kitakyushu
 description: An AI-powered mathematics learning assistant
 startDate: 2026-07-14
 status: ongoing
