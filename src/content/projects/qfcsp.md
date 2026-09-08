@@ -1,5 +1,5 @@
 ---
-title: QFC-SP research at Kyushu university
+title: QFC-SP Primary Course at Kyushu university
 description: Data science and Informatics
 startDate: 2026-07-20
 status: ongoing
