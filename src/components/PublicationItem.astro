@@ -30,7 +30,9 @@ const { title, authors, year, venue, status, pdf, doi } = pub.data;
     display: grid;
     grid-template-columns: 3rem 1fr;
     gap: 1.5rem;
-    margin-bottom: 3rem;
+    margin-bottom: 1.25rem;
+    padding-bottom: 1.25rem;
+    border-bottom: 1px solid var(--color-border);
   }
 
   .year {
@@ -41,8 +43,8 @@ const { title, authors, year, venue, status, pdf, doi } = pub.data;
   .title {
     font-weight: 300;
     font-size: 1.1rem;
-    margin-bottom: 0.25rem;
-    line-height: 1.4;
+    margin-bottom: 0.2rem;
+    line-height: 1.35;
   }
 
   .authors {
@@ -64,16 +66,15 @@ const { title, authors, year, venue, status, pdf, doi } = pub.data;
   }
 
   .links a {
-    text-decoration: none;
+    text-decoration: underline;
+    text-underline-offset: 2px;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    color: var(--color-gray);
-    border-bottom: 1px solid var(--color-border);
+    color: var(--color-link);
   }
 
   .links a:hover {
-    color: var(--color-text);
-    border-bottom-color: var(--color-text);
+    color: var(--color-link-hover);
   }
 
   @media (max-width: 600px) {
