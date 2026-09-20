@@ -2,15 +2,18 @@
 import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import MathBackground from '../components/MathBackground.astro';
+import { PAGE_PRESETS, type MathBgConfig } from '../lib/mathBgPresets';
 import 'katex/dist/katex.min.css';
 
 
 interface Props {
   title?: string;
   description?: string;
+  mathBg?: MathBgConfig;
 }
 
-const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
+const { title = SITE_TITLE, description = SITE_DESCRIPTION, mathBg = PAGE_PRESETS.home } = Astro.props;
 ---
 
 <!doctype html>
@@ -186,6 +189,7 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION } = Astro.props;
     </style>
   </head>
   <body>
+    <MathBackground {...mathBg} />
     <Header />
     <main>
       <slot />

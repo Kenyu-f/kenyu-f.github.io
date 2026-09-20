@@ -1,13 +1,14 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGE_PRESETS } from '../lib/mathBgPresets';
 
 const projects = (await getCollection('projects')).sort(
   (a, b) => b.data.startDate.valueOf() - a.data.startDate.valueOf()
 );
 ---
 
-<BaseLayout title="Projects | Kenyu FUJIMOTO">
+<BaseLayout mathBg={PAGE_PRESETS.projects} title="Projects | Kenyu FUJIMOTO">
   <h1>Projects</h1>
   
   <div class="project-list">

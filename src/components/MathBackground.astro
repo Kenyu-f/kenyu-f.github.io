@@ -1,0 +1,127 @@
+---
+import katex from 'katex';
+import { generateTilingEdges } from '../lib/hyperbolicTiling';
+import type { MathBgConfig } from '../lib/mathBgPresets';
+
+interface Props extends MathBgConfig {}
+
+const { p, q, rotOffset = 0, depth = 3, spinSeconds = 210, formulas } = Astro.props as Props;
+
+const edges = generateTilingEdges(p, q, { depth, maxAbs: 0.9, rotOffset });
+
+const formulaHtml = formulas.map((tex) =>
+  katex.renderToString(tex, {
+    throwOnError: false,
+    displayMode: true,
+    output: 'html',
+  })
+);
+---
+
+<div class="math-bg" aria-hidden="true" style={`--spin-duration:${spinSeconds}s`}>
+  <svg class="tiling" viewBox="-1.05 -1.05 2.1 2.1" preserveAspectRatio="xMidYMid meet">
+    <circle cx="0" cy="0" r="1" class="boundary" />
+    {edges.map((d) => (
+      <path d={d} />
+    ))}
+  </svg>
+  <div class="formulas">
+    {formulaHtml.map((html, i) => (
+      <div class={`formula slot-${(i % 4) + 1}`} set:html={html} />
+    ))}
+  </div>
+</div>
+
+<style>
+  .math-bg {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+    color: var(--color-text);
+  }
+
+  .tiling {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: min(150vmax, 1400px);
+    height: min(150vmax, 1400px);
+    transform: translate(-50%, -50%);
+    opacity: 0.055;
+    animation: spin var(--spin-duration, 210s) linear infinite;
+  }
+
+  .tiling path {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.0035;
+  }
+
+  .tiling .boundary {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.002;
+  }
+
+  @keyframes spin {
+    from {
+      transform: translate(-50%, -50%) rotate(0deg);
+    }
+    to {
+      transform: translate(-50%, -50%) rotate(360deg);
+    }
+  }
+
+  .formulas {
+    position: absolute;
+    inset: 0;
+  }
+
+  .formula {
+    position: absolute;
+    opacity: 0.11;
+    font-size: clamp(1.1rem, 2.4vw, 1.6rem);
+    white-space: nowrap;
+  }
+
+  .slot-1 {
+    top: 8%;
+    right: 6%;
+  }
+  .slot-2 {
+    bottom: 10%;
+    left: 5%;
+  }
+  .slot-3 {
+    top: 42%;
+    right: -2%;
+    transform: rotate(90deg);
+    transform-origin: right center;
+  }
+  .slot-4 {
+    bottom: 30%;
+    left: -2%;
+    transform: rotate(-90deg);
+    transform-origin: left center;
+  }
+
+  @media (max-width: 700px) {
+    .formula {
+      display: none;
+    }
+    .formula.slot-1 {
+      display: block;
+      top: 4%;
+      right: 4%;
+      font-size: 1rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .tiling {
+      animation: none;
+    }
+  }
+</style>

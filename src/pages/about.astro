@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { PAGE_PRESETS } from '../lib/mathBgPresets';
 ---
 
-<BaseLayout title="About | Kenyu FUJIMOTO">
+<BaseLayout mathBg={PAGE_PRESETS.about} title="About | Kenyu FUJIMOTO">
   <article>
     <h1>About</h1>
     
