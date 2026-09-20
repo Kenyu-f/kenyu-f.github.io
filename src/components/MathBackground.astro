@@ -1,34 +1,95 @@
 ---
 import katex from 'katex';
 import { generateTilingEdges } from '../lib/hyperbolicTiling';
+import { generatePadicDisk } from '../lib/padicDisk';
 import type { MathBgConfig } from '../lib/mathBgPresets';
 
 interface Props extends MathBgConfig {}
 
-const { p, q, rotOffset = 0, depth = 3, spinSeconds = 210, formulas } = Astro.props as Props;
+const {
+  pattern,
+  p,
+  q,
+  rotOffset = 0,
+  depth,
+  spinSeconds = 210,
+  formulas,
+  motifs = [],
+  diagram,
+} = Astro.props as Props;
 
-const edges = generateTilingEdges(p, q, { depth, maxAbs: 0.9, rotOffset });
+const edges =
+  pattern === 'hyperbolic' && q
+    ? generateTilingEdges(p, q, { depth: depth ?? 3, maxAbs: 0.9, rotOffset })
+    : [];
 
-const formulaHtml = formulas.map((tex) =>
-  katex.renderToString(tex, {
-    throwOnError: false,
-    displayMode: true,
-    output: 'html',
-  })
-);
+const circles = pattern === 'padic' ? generatePadicDisk(p, { depth: depth ?? 4, rotOffset }) : [];
+
+const render = (tex: string, displayMode: boolean) =>
+  katex.renderToString(tex, { throwOnError: false, displayMode, output: 'html' });
+
+const formulaHtml = formulas.map((tex) => render(tex, true));
+const motifHtml = motifs.map((tex) => render(tex, false));
 ---
 
-<div class="math-bg" aria-hidden="true" style={`--spin-duration:${spinSeconds}s`}>
-  <svg class="tiling" viewBox="-1.05 -1.05 2.1 2.1" preserveAspectRatio="xMidYMid meet">
+<div class="math-bg" aria-hidden="true">
+  <svg
+    class:list={['pattern-svg', pattern]}
+    style={`animation-duration:${spinSeconds}s`}
+    viewBox="-1.05 -1.05 2.1 2.1"
+    preserveAspectRatio="xMidYMid meet"
+  >
     <circle cx="0" cy="0" r="1" class="boundary" />
-    {edges.map((d) => (
-      <path d={d} />
-    ))}
+    {pattern === 'hyperbolic' && edges.map((d) => <path d={d} />)}
+    {pattern === 'padic' &&
+      circles.map((c) => <circle cx={c.cx} cy={c.cy} r={c.r} />)}
   </svg>
+
   <div class="formulas">
     {formulaHtml.map((html, i) => (
       <div class={`formula slot-${(i % 4) + 1}`} set:html={html} />
     ))}
+    {motifHtml.map((html, i) => (
+      <div class={`motif motif-slot-${(i % 12) + 1}`} set:html={html} />
+    ))}
+
+    {diagram === 'commutativeTriangle' && (
+      <svg class="diagram diagram-triangle" viewBox="0 0 160 140">
+        <defs>
+          <marker id="arrowhead" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" />
+          </marker>
+        </defs>
+        <text x="72" y="16">A</text>
+        <text x="8" y="128">B</text>
+        <text x="140" y="128">C</text>
+        <line x1="70" y1="22" x2="26" y2="112" marker-end="url(#arrowhead)" />
+        <line x1="24" y1="120" x2="130" y2="120" marker-end="url(#arrowhead)" />
+        <line x1="80" y1="24" x2="132" y2="112" marker-end="url(#arrowhead)" />
+        <text x="38" y="70">f</text>
+        <text x="78" y="132">g</text>
+        <text x="112" y="70">h</text>
+      </svg>
+    )}
+
+    {diagram === 'pullbackSquare' && (
+      <svg class="diagram diagram-pullback" viewBox="0 0 150 150">
+        <defs>
+          <marker id="arrowhead2" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto">
+            <path d="M0,0 L6,3 L0,6 Z" />
+          </marker>
+        </defs>
+        <text x="8" y="16">P</text>
+        <text x="132" y="16">A</text>
+        <text x="8" y="140">B</text>
+        <text x="132" y="140">C</text>
+        <line x1="20" y1="10" x2="122" y2="10" marker-end="url(#arrowhead2)" />
+        <line x1="10" y1="20" x2="10" y2="122" marker-end="url(#arrowhead2)" />
+        <line x1="140" y1="20" x2="140" y2="122" marker-end="url(#arrowhead2)" />
+        <line x1="20" y1="134" x2="122" y2="134" marker-end="url(#arrowhead2)" />
+        <path d="M10,26 L26,26 L26,10" fill="none" />
+      </svg>
+    )}
   </div>
 </div>
 
@@ -42,7 +103,7 @@ const formulaHtml = formulas.map((tex) =>
     color: var(--color-text);
   }
 
-  .tiling {
+  .pattern-svg {
     position: absolute;
     top: 50%;
     left: 50%;
@@ -50,16 +111,24 @@ const formulaHtml = formulas.map((tex) =>
     height: min(150vmax, 1400px);
     transform: translate(-50%, -50%);
     opacity: 0.055;
-    animation: spin var(--spin-duration, 210s) linear infinite;
+    animation-name: spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
   }
 
-  .tiling path {
+  .pattern-svg.hyperbolic path {
     fill: none;
     stroke: currentColor;
     stroke-width: 0.0035;
   }
 
-  .tiling .boundary {
+  .pattern-svg.padic circle:not(.boundary) {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 0.003;
+  }
+
+  .pattern-svg .boundary {
     fill: none;
     stroke: currentColor;
     stroke-width: 0.002;
@@ -79,11 +148,20 @@ const formulaHtml = formulas.map((tex) =>
     inset: 0;
   }
 
-  .formula {
+  .formula,
+  .motif {
     position: absolute;
+    white-space: nowrap;
+  }
+
+  .formula {
     opacity: 0.11;
     font-size: clamp(1.1rem, 2.4vw, 1.6rem);
-    white-space: nowrap;
+  }
+
+  .motif {
+    opacity: 0.09;
+    font-size: clamp(0.75rem, 1.3vw, 0.95rem);
   }
 
   .slot-1 {
@@ -107,8 +185,54 @@ const formulaHtml = formulas.map((tex) =>
     transform-origin: left center;
   }
 
+  /* Scattered, individually rotated motif badges — echoes a motif being
+     carried to different positions/orientations across the disk. */
+  .motif-slot-1 { top: 6%; left: 8%; transform: rotate(-18deg); }
+  .motif-slot-2 { top: 14%; right: 14%; transform: rotate(24deg); }
+  .motif-slot-3 { top: 28%; left: 2%; transform: rotate(-90deg); transform-origin: left center; }
+  .motif-slot-4 { top: 36%; right: 4%; transform: rotate(12deg); }
+  .motif-slot-5 { top: 50%; left: 10%; transform: rotate(75deg); }
+  .motif-slot-6 { top: 58%; right: 9%; transform: rotate(-45deg); }
+  .motif-slot-7 { top: 68%; left: 4%; transform: rotate(30deg); }
+  .motif-slot-8 { bottom: 18%; right: 6%; transform: rotate(-8deg); }
+  .motif-slot-9 { bottom: 9%; left: 22%; transform: rotate(50deg); }
+  .motif-slot-10 { bottom: 26%; right: 24%; transform: rotate(-30deg); }
+  .motif-slot-11 { top: 82%; left: 42%; transform: rotate(15deg); }
+  .motif-slot-12 { top: 4%; left: 46%; transform: rotate(-60deg); }
+
+  .diagram {
+    position: absolute;
+    width: 130px;
+    height: auto;
+    opacity: 0.09;
+    bottom: 6%;
+    right: 4%;
+  }
+  .diagram-pullback {
+    bottom: auto;
+    top: 60%;
+    left: 4%;
+    right: auto;
+  }
+  .diagram text {
+    font-size: 12px;
+    fill: currentColor;
+    font-family: 'EB Garamond', Georgia, serif;
+  }
+  .diagram line,
+  .diagram path {
+    stroke: currentColor;
+    stroke-width: 1;
+  }
+  .diagram marker path {
+    fill: currentColor;
+    stroke: none;
+  }
+
   @media (max-width: 700px) {
-    .formula {
+    .formula,
+    .motif,
+    .diagram {
       display: none;
     }
     .formula.slot-1 {
@@ -120,7 +244,7 @@ const formulaHtml = formulas.map((tex) =>
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .tiling {
+    .pattern-svg {
       animation: none;
     }
   }

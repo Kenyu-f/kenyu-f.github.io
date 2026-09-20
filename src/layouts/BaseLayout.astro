@@ -3,6 +3,7 @@ import { SITE_TITLE, SITE_DESCRIPTION } from '../consts';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MathBackground from '../components/MathBackground.astro';
+import MathBackgroundMobileReveal from '../components/MathBackgroundMobileReveal.astro';
 import { PAGE_PRESETS, type MathBgConfig } from '../lib/mathBgPresets';
 import 'katex/dist/katex.min.css';
 
@@ -195,5 +196,6 @@ const { title = SITE_TITLE, description = SITE_DESCRIPTION, mathBg = PAGE_PRESET
       <slot />
     </main>
     <Footer />
+    <MathBackgroundMobileReveal {...mathBg} />
   </body>
 </html>
