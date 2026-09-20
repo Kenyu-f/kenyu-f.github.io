@@ -4,12 +4,9 @@ import type { MathBgConfig } from '../lib/mathBgPresets';
 
 interface Props extends MathBgConfig {}
 
-const { formulas, motifs = [] } = Astro.props as Props;
+const { formulas } = Astro.props as Props;
 
-const render = (tex: string, displayMode: boolean) =>
-  katex.renderToString(tex, { throwOnError: false, displayMode, output: 'html' });
-
-const items = [...formulas.map((t) => render(t, true)), ...motifs.map((t) => render(t, false))];
+const items = formulas.map((t) => katex.renderToString(t, { throwOnError: false, displayMode: true, output: 'html' }));
 ---
 
 <div class="math-reveal" aria-hidden="true">
