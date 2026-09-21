@@ -1,0 +1,128 @@
+---
+import { generateIcosahedronEdges } from '../lib/icosahedron';
+
+interface Props {
+  size?: number; // px
+  spinSeconds?: number;
+  tiltDeg?: number;
+  color?: string;
+  corner?: 'bottom-right' | 'bottom-left' | 'top-right' | 'top-left';
+}
+
+const {
+  size = 220,
+  spinSeconds = 70,
+  tiltDeg = 18,
+  color = '#3b5fa6',
+  corner = 'bottom-right',
+} = Astro.props as Props;
+
+// Three concentric shells receding outward — an homage to the way cells
+// shrink toward the boundary sphere in the Poincaré ball picture of the
+// {3,5,3} icosahedral honeycomb (see icosahedron.ts for why this is a
+// motif rather than a geometrically exact hyperbolic tessellation).
+const shells = [
+  { radius: size * 0.21, opacity: 0.26 },
+  { radius: size * 0.32, opacity: 0.16 },
+  { radius: size * 0.44, opacity: 0.09 },
+];
+
+const lineWidth = 1.3;
+---
+
+<div class:list={['honeycomb-wrap', corner]} style={`width:${size}px;height:${size}px;color:${color};`} aria-hidden="true">
+  <div class="honeycomb-scene">
+    <div class="honeycomb-rotator" style={`animation-duration:${spinSeconds}s; --tilt:${tiltDeg}deg;`}>
+      {shells.map((shell) => {
+        const edges = generateIcosahedronEdges(shell.radius);
+        return (
+          <div class="shell" style={`opacity:${shell.opacity}`}>
+            {edges.map((e) => (
+              <div
+                class="edge"
+                style={`width:${lineWidth}px;height:${e.length}px;margin-left:${-lineWidth / 2}px;margin-top:${-e.length / 2}px;transform:translate3d(${e.mid.x}px,${e.mid.y}px,${e.mid.z}px) rotate3d(${e.axis.x},${e.axis.y},${e.axis.z},${e.angleDeg}deg);`}
+              />
+            ))}
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</div>
+
+<style>
+  .honeycomb-wrap {
+    position: absolute;
+    pointer-events: none;
+  }
+  .bottom-right {
+    bottom: 4%;
+    right: 3%;
+  }
+  .bottom-left {
+    bottom: 4%;
+    left: 3%;
+  }
+  .top-right {
+    top: 6%;
+    right: 3%;
+  }
+  .top-left {
+    top: 6%;
+    left: 3%;
+  }
+
+  .honeycomb-scene {
+    width: 100%;
+    height: 100%;
+    perspective: 900px;
+  }
+
+  .honeycomb-rotator {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    transform-style: preserve-3d;
+    animation-name: honeycomb-spin;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+  }
+
+  @keyframes honeycomb-spin {
+    from {
+      transform: rotateX(var(--tilt)) rotateY(0deg);
+    }
+    to {
+      transform: rotateX(var(--tilt)) rotateY(360deg);
+    }
+  }
+
+  .shell {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    transform-style: preserve-3d;
+  }
+
+  .edge {
+    position: absolute;
+    top: 0;
+    left: 0;
+    background: currentColor;
+  }
+
+  @media (max-width: 700px) {
+    .honeycomb-wrap {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .honeycomb-rotator {
+      animation: none;
+      transform: rotateX(var(--tilt)) rotateY(25deg);
+    }
+  }
+</style>

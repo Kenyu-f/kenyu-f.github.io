@@ -2,11 +2,12 @@
 import katex from 'katex';
 import { generateTilingEdges } from '../lib/hyperbolicTiling';
 import { generatePadicDisk, type PadicCircle } from '../lib/padicDisk';
+import IcosahedralHoneycomb from './IcosahedralHoneycomb.astro';
 import type { MathBgConfig } from '../lib/mathBgPresets';
 
 interface Props extends MathBgConfig {}
 
-const { pattern, p, q, rotOffset = 0, depth, spinSeconds = 210, formulas } = Astro.props as Props;
+const { pattern, p, q, rotOffset = 0, depth, spinSeconds = 210, formulas, honeycomb = false } = Astro.props as Props;
 
 const edges =
   pattern === 'hyperbolic' && q
@@ -63,6 +64,8 @@ const diskLabels =
       ))}
     </div>
   )}
+
+  {honeycomb && <IcosahedralHoneycomb corner="bottom-right" />}
 </div>
 
 <style>

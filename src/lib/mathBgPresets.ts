@@ -33,6 +33,8 @@ export interface MathBgConfig {
    * p-adic: formulas placed at the disk's own circle centers, rotating with it.
    */
   formulas: string[];
+  /** Adds a small rotating icosahedron motif (true CSS 3D, always blue-tinted). */
+  honeycomb?: boolean;
 }
 
 // ---- Formula pool -------------------------------------------------------
@@ -46,6 +48,15 @@ export const FORMULAS = {
   modularGroup: String.raw`\mathrm{SL}(2,\mathbb{Z})/\{\pm I\}`,
   schlafliCondition: String.raw`\dfrac{1}{p}+\dfrac{1}{q}<\dfrac{1}{2}`,
   vertexRadius: String.raw`r=\sqrt{\dfrac{\cos\left(\frac{\pi}{p}+\frac{\pi}{q}\right)}{\cos\left(\frac{\pi}{p}-\frac{\pi}{q}\right)}}`,
+  hyperbolicDistance: String.raw`d(u,v)=\operatorname{arcosh}\bigl(1+\delta(u,v)\bigr)`,
+  deltaInvariant: String.raw`\delta(u,v)=2\dfrac{\lVert u-v\rVert^{2}}{(1-\lVert u\rVert^{2})(1-\lVert v\rVert^{2})}`,
+  hyperboloidCorrespondence: String.raw`y_i=\dfrac{x_i}{1+t}`,
+  poincareLineEquation: String.raw`x^{2}+y^{2}+ax+by+1=0`,
+  angleCosSquared: String.raw`\cos^{2}\theta=\dfrac{P^{2}}{QR}`,
+  homogeneousSpace: String.raw`\mathfrak{H}=\mathrm{PSL}(2,\mathbb{R})/\mathrm{SO}(2)`,
+  isometryGroup: String.raw`\mathrm{Isom}^{+}(\mathfrak{H})\cong\mathrm{PSL}(2,\mathbb{R})`,
+  stabilizer: String.raw`\mathrm{Stab}(i)=\{g\in\mathrm{PSL}(2,\mathbb{R}):g\cdot i=i\}\cong\mathrm{SO}(2)`,
+  icosahedralHoneycomb: String.raw`\{3,5,3\}\subset\mathbb{H}^{3}`,
 
   // p-adic geometry
   padicNorm: String.raw`|x|_p=p^{-v_p(x)}`,
@@ -95,7 +106,8 @@ export const PAGE_PRESETS: Record<string, MathBgConfig> = {
     q: 3,
     rotOffset: 0,
     spinSeconds: 220,
-    formulas: [F.poincareMetric, F.classEquation, F.tetration],
+    formulas: [F.hyperbolicDistance, F.classEquation, F.tetration],
+    honeycomb: true,
   },
   about: {
     // p = 3 → 3 top-level circles, one formula per circle.
@@ -112,7 +124,8 @@ export const PAGE_PRESETS: Record<string, MathBgConfig> = {
     q: 7,
     rotOffset: 0.6,
     spinSeconds: 240,
-    formulas: [F.fuchsian, F.hyperopRecursive, F.ackermann],
+    formulas: [F.homogeneousSpace, F.hyperopRecursive, F.ackermann],
+    honeycomb: true,
   },
   projects: {
     // p = 5 → 5 top-level circles.
@@ -138,7 +151,7 @@ export const PAGE_PRESETS: Record<string, MathBgConfig> = {
     q: 5,
     rotOffset: 1.1,
     spinSeconds: 210,
-    formulas: [F.repDef, F.characterOrthogonality, F.peterWeyl],
+    formulas: [F.isometryGroup, F.stabilizer, F.peterWeyl],
   },
   teaching: {
     pattern: 'hyperbolic',
@@ -146,7 +159,7 @@ export const PAGE_PRESETS: Record<string, MathBgConfig> = {
     q: 5,
     rotOffset: 0.45,
     spinSeconds: 180,
-    formulas: [F.lagrange, F.sylow, F.semidirect],
+    formulas: [F.deltaInvariant, F.poincareLineEquation, F.angleCosSquared],
   },
   cv: {
     // p = 7 → 7 top-level circles; only use the 4 largest.
@@ -163,7 +176,7 @@ export const PAGE_PRESETS: Record<string, MathBgConfig> = {
     q: 5,
     rotOffset: 0.2,
     spinSeconds: 200,
-    formulas: [F.liealgebra, F.knuthArrow, F.uea],
+    formulas: [F.lagrange, F.sylow, F.knuthArrow],
   },
 };
 
@@ -180,6 +193,9 @@ const HYPERBOLIC_FORMULA_POOL: FormulaKey[] = [
   'poincareMetric', 'upperHalfPlaneFraktur', 'mobius', 'crossRatio', 'fuchsian',
   'modularGroup', 'lagrange', 'classEquation', 'sylow', 'semidirect', 'repDef',
   'characterOrthogonality', 'peterWeyl', 'liealgebra', 'sl2', 'uea',
+  'hyperbolicDistance', 'deltaInvariant', 'hyperboloidCorrespondence',
+  'poincareLineEquation', 'angleCosSquared', 'homogeneousSpace', 'isometryGroup',
+  'stabilizer', 'icosahedralHoneycomb',
   'tetration', 'knuthArrow', 'pentation', 'hyperopRecursive', 'ackermann',
 ];
 const PADIC_FORMULA_POOL: FormulaKey[] = [
@@ -233,7 +249,8 @@ export function mathBgForKey(key: string): MathBgConfig {
     2,
     h
   );
-  return { pattern: 'hyperbolic', p, q, rotOffset, spinSeconds, formulas: [...others.map((k) => F[k]), F[hyperop]] };
+  const honeycomb = h % 6 === 0;
+  return { pattern: 'hyperbolic', p, q, rotOffset, spinSeconds, formulas: [...others.map((k) => F[k]), F[hyperop]], honeycomb };
 }
 
 /** @deprecated use mathBgForKey */
