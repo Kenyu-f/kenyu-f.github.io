@@ -1,0 +1,11 @@
+baseURL = "https://kenyu-f.github.io/"
+locale = "en"
+title = "Kenyu FUJIMOTO"
+
+disableKinds = ["taxonomy", "term"]
+
+[markup.goldmark.renderer]
+unsafe = true
+
+[security]
+allowContent = ['^text/html$']

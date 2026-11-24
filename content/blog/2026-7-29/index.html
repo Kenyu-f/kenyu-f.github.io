@@ -1,0 +1,29 @@
++++
+title = "Legendre's theorem"
+date = "2026-07-29"
+hide_research = true
++++
+
+<article>
+        <h1>Legendre's theorem</h1>
+        <p class="post-meta">July 29, 2026</p>
+        <!-- 記事本文を編集するときは、下の p / h2 / ul などを書き換えてください。 -->
+
+<h2>Theorem (Legendre)</h2>
+<p>Let p be a prime number and let n ∈ ℕ. Then</p>
+\[ v_p(n!)=\sum_{k=1}^{\infty}\left\lfloor\frac{n}{p^k}\right\rfloor. \]
+<p>where vₚ(m) denotes the exponent of p in the prime factorization of the positive integer m.</p>
+<hr>
+<h2>Proof</h2>
+<p>For every positive integer m, let vₚ(m) denote the unique non-negative integer satisfying p<sup>vₚ(m)</sup> | m and p<sup>vₚ(m)+1</sup> ∤ m.</p>
+<p>Since n! = ∏<sub>i=1</sub><sup>n</sup> i, the uniqueness of prime factorization implies</p>
+\[ v_p(n!)=\sum_{i=1}^{n}v_p(i). \tag{1} \]
+<p>For each positive integer i, observe that vₚ(i) = ∑<sub>k=1</sub><sup>∞</sup> 1<sub>pᵏ | i</sub>, where the indicator is 1 if pᵏ divides i and 0 otherwise.</p>
+<p>Substituting this expression into (1), and exchanging the order of the finite nonzero sums, gives</p>
+\[ v_p(n!)=\sum_{k=1}^{\infty}\sum_{i=1}^{n}\mathbf 1_{p^k\mid i}. \]
+<p>The inner sum counts the positive integers at most n divisible by pᵏ. There are exactly ⌊n/pᵏ⌋ such integers. Therefore</p>
+\[ v_p(n!)=\sum_{k=1}^{\infty}\left\lfloor\frac{n}{p^k}\right\rfloor. \]
+<p>Only finitely many terms are nonzero, which completes the proof. □</p>
+
+      </article>
+      <p class="back-link"><a href="/blog/">← Back to blog</a></p>

@@ -1,0 +1,96 @@
+/*
+ * OpenBSD-inspired stylesheet.
+ * Fixed dark theme: independent of browser and OS color preferences.
+ */
+
+:root {
+  color-scheme: dark;
+
+  --red: #E05434;
+  --green: #20B700;
+  --blue: #A7C1E5;
+  --buildhead: #474749;
+}
+
+:link {
+  color: #BAD7FF;
+}
+
+:visited {
+  color: #F6BAFF;
+}
+
+body {
+  background-color: #1E1F21;
+  color: #EEEFF1;
+  margin: 15px auto;
+  padding: 0 10px;
+}
+
+@media (min-width: 800px) {
+  body {
+    max-width: 85%;
+  }
+}
+
+/* Keep all pages within the same content area. */
+
+header,
+main,
+footer {
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+nav {
+  margin: 0 0 1em;
+}
+
+nav a {
+  margin-right: 0.55em;
+}
+
+code {
+  white-space: nowrap;
+}
+
+tt {
+  white-space: pre;
+}
+
+/* Blog */
+
+.post-list time {
+  display: inline-block;
+  min-width: 8.5em;
+}
+
+.post-meta {
+  color: #AAAAAA;
+}
+
+/* Mathematics */
+
+.katex-display {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+/* Mobile layout */
+
+@media (max-width: 600px) {
+  body {
+    max-width: none;
+    margin-top: 10px;
+  }
+
+  nav a {
+    display: inline-block;
+    margin: 0 0.45em 0.35em 0;
+  }
+
+  .post-list time {
+    display: block;
+  }
+}
