@@ -14,17 +14,17 @@ hide_research = true
 \[ G = \left\{ \begin{pmatrix}a&b\\0&c\end{pmatrix} : a,b,c\in\mathbb R,\ ac\ne0 \right\}. \]
 <p>Then G is a subgroup of GL₂(ℝ).</p>
 <h2>Proof</h2>
-<p>Since det([[a, b], [0, c]]) = ac ≠ 0 for every element of G, each such matrix is invertible. We verify the three subgroup axioms.</p>
+<p>Since \(\det\begin{pmatrix}a&b\\0&c\end{pmatrix}=ac\ne0\) for every element of \(G\), each such matrix is invertible. We verify the three subgroup axioms.</p>
 <h3>(1) Closure under multiplication</h3>
-<p>Let A = [[a, b], [0, c]] and B = [[d, e], [0, f]] be elements of G. Then</p>
+<p>Let \(A=\begin{pmatrix}a&b\\0&c\end{pmatrix}\) and \(B=\begin{pmatrix}d&e\\0&f\end{pmatrix}\) be elements of \(G\). Then</p>
 \[ AB = \begin{pmatrix}ad&ae+bf\\0&cf\end{pmatrix}. \]
-<p>Since a, c, d, f are nonzero, ad and cf are nonzero. Hence AB ∈ G.</p>
+<p>Since \(a,c,d,f\ne0\), \(ad\) and \(cf\) are nonzero. Hence \(AB\in G\).</p>
 <h3>(2) Identity element</h3>
-<p>The identity matrix I = [[1, 0], [0, 1]] satisfies 1 · 1 ≠ 0, so I ∈ G.</p>
+<p>The identity matrix \(I=\begin{pmatrix}1&0\\0&1\end{pmatrix}\) satisfies \(1\cdot1\ne0\), so \(I\in G\).</p>
 <h3>(3) Closure under inverses</h3>
-<p>For A = [[a, b], [0, c]] ∈ G,</p>
+<p>For \(A=\begin{pmatrix}a&b\\0&c\end{pmatrix}\in G\),</p>
 \[ A^{-1}=\begin{pmatrix}\frac1a&-\frac{b}{ac}\\0&\frac1c\end{pmatrix}. \]
-<p>Since 1/a and 1/c are nonzero, A⁻¹ ∈ G.</p>
+<p>Since \(1/a\) and \(1/c\) are nonzero, \(A^{-1}\in G\).</p>
 <p>Therefore G is a subgroup of GL₂(ℝ). □</p>
 
       </article>
